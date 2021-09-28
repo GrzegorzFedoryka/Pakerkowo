@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PakerkowoAPI", "PakerkowoAPI.csproj", "{CD9E441A-70EF-4908-BF24-6C70C2D3E35C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PakerkowoMVC", "..\PakerkowoMVC\PakerkowoMVC.csproj", "{4A30A53D-A3A9-4461-A573-D5AE94D6C881}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD9E441A-70EF-4908-BF24-6C70C2D3E35C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD9E441A-70EF-4908-BF24-6C70C2D3E35C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD9E441A-70EF-4908-BF24-6C70C2D3E35C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD9E441A-70EF-4908-BF24-6C70C2D3E35C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A30A53D-A3A9-4461-A573-D5AE94D6C881}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A30A53D-A3A9-4461-A573-D5AE94D6C881}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A30A53D-A3A9-4461-A573-D5AE94D6C881}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A30A53D-A3A9-4461-A573-D5AE94D6C881}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {685B437A-E34D-45C9-9E17-EC8D28064AEE}
+	EndGlobalSection
+EndGlobal

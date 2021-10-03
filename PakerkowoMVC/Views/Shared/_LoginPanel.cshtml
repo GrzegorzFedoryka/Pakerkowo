@@ -1,0 +1,16 @@
+﻿@model LoginModelDto
+
+<form id="loginForm">
+    @Html.LabelFor(m => m.Login)
+    @Html.TextBoxFor(m => m.Login)
+
+    @Html.LabelFor(m => m.Password)
+    @Html.TextBoxFor(m => m.Password)
+
+    <input type="submit" value="Login" class="btn btn-primary" id="submit" />
+</form>
+<div id="resultDiv"></div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.js"></script>
+<script src="~/js/loginButtonHandler.js"></script>

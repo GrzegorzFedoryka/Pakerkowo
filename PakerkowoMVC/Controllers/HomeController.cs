@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PakerkowoMVC.Controllers
 {
@@ -18,14 +19,14 @@ namespace PakerkowoMVC.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult GetHomePage()
         {
-            return View();
+            return View("HomePage");
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            return View("Privacy");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -33,5 +34,14 @@ namespace PakerkowoMVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpPost]
+        public IActionResult Login()
+        {
+
+            var j = "Zalogowany";
+            return Json(j);
+        }
+
     }
 }

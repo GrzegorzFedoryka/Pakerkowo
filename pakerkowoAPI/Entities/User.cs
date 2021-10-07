@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace pakerkowo.Entities
+namespace PakerkowoAPI.Entities
 {
     public class User
     {
@@ -14,5 +14,6 @@ namespace pakerkowo.Entities
         public string PasswordHash { get; set; }
         public int RoleId { get; set; }
         public virtual Role Role { get; set; }
+        public virtual List<Exercise> LikedExercises { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PakerkowoAPI.Entities
 {
-    public class Role
+    public class BodyPart
     {
         public int Id { get; set; }
         public string Name { get; set; }

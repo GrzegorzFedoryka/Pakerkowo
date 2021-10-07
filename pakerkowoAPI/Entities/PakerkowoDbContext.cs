@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace pakerkowo.Entities
+namespace PakerkowoAPI.Entities
 {
     public class PakerkowoDbContext : DbContext
     {
@@ -14,6 +14,8 @@ namespace pakerkowo.Entities
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<BodyPart> BodyParts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,7 +30,19 @@ namespace pakerkowo.Entities
                 .Property(u => u.PasswordHash)
                 .IsRequired();
             modelBuilder.Entity<User>()
-                .Property(u => u.Role)
+                .Property(u => u.RoleId)
+                .IsRequired();
+
+            modelBuilder.Entity<Role>()
+                .Property(r => r.Name)
+                .IsRequired();
+
+            modelBuilder.Entity<Exercise>()
+                .Property(e => e.Name)
+                .IsRequired();
+
+            modelBuilder.Entity<BodyPart>()
+                .Property(bp => bp.Name)
                 .IsRequired();
         }
     }

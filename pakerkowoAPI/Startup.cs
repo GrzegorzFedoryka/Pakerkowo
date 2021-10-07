@@ -7,7 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using pakerkowo.Entities;
+using PakerkowoAPI;
+using PakerkowoAPI.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,15 +32,18 @@ namespace pakerkowoAPI
             services.AddControllers();
             services.AddDbContext<PakerkowoDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("PakerkowoDbConnection")));
+            services.AddScoped<PakerkowoSeeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, PakerkowoSeeder seeder)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            seeder.Seed();
 
             app.UseHttpsRedirection();
 

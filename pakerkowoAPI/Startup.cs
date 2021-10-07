@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PakerkowoAPI;
 using PakerkowoAPI.Entities;
+using PakerkowoAPI.Middlewares;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace pakerkowoAPI
             services.AddDbContext<PakerkowoDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("PakerkowoDbConnection")));
             services.AddScoped<PakerkowoSeeder>();
+            services.AddScoped<ErrorHandlingMiddleware>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +46,8 @@ namespace pakerkowoAPI
             }
 
             seeder.Seed();
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseHttpsRedirection();
 

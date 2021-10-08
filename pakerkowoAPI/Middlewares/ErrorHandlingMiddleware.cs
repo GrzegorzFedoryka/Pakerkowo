@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using PakerkowoAPI.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,11 @@ namespace PakerkowoAPI.Middlewares
                 await next.Invoke(context);
             }
 
-            //catch (NotFoundException notFoundException)
-            //{
-            //    context.Response.StatusCode = 404;
-            //    await context.Response.WriteAsync(notFoundException.Message);
-            //}
+            catch (NotFoundException notFoundException)
+            {
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync(notFoundException.Message);
+            }
             //catch (BadRequestException badRequestException)
             //{
             //    context.Response.StatusCode = 400;
@@ -31,7 +32,7 @@ namespace PakerkowoAPI.Middlewares
             //    await context.Response.WriteAsync(forbidException.Message);
             //}
 
-            catch (Exception e)
+            catch (Exception)
             {
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsync("Something get wrong");

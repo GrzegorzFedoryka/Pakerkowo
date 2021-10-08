@@ -35,6 +35,7 @@ namespace pakerkowoAPI
                 options.UseSqlServer(Configuration.GetConnectionString("PakerkowoDbConnection")));
             services.AddScoped<PakerkowoSeeder>();
             services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddAutoMapper(this.GetType().Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

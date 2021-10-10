@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using PakerkowoAPI;
 using PakerkowoAPI.Entities;
 using PakerkowoAPI.Middlewares;
+using PakerkowoAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +37,8 @@ namespace pakerkowoAPI
                 options.UseSqlServer(Configuration.GetConnectionString("PakerkowoDbConnection")));
             services.AddScoped<PakerkowoSeeder>();
             services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IExerciseService, ExerciseService>();
             services.AddAutoMapper(this.GetType().Assembly);
         }
 

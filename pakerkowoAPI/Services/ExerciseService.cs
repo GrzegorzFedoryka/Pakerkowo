@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using PakerkowoAPI.Entities;
 using PakerkowoAPI.Exceptions;
 using PakerkowoAPI.Models;
@@ -11,31 +12,25 @@ namespace PakerkowoAPI.Services
 {
     public interface IExerciseService
     {
-        ExerciseDto GetById(int id);
+        public Task<string> GetById(int id);
     }
 
     public class ExerciseService : IExerciseService
     {
         private readonly PakerkowoDbContext _dbContext;
+        private readonly ILogger _logger;
         private readonly IMapper _mapper;
 
-        public ExerciseService(PakerkowoDbContext dbContext, IMapper mapper)
+        public ExerciseService(PakerkowoDbContext dbContext, ILogger logger, IMapper mapper)
         {
             _dbContext = dbContext;
+            _logger = logger;
             _mapper = mapper;
         }
 
-        public ExerciseDto GetById(int id)
+        public Task<string> GetById(int id)
         {
-            var exercise = _dbContext
-                                .Exercises
-                                .FirstOrDefault(e => e.Id == id);
-            if (exercise == null)
-            {
-                throw new NotFoundException("Exercise not found!");
-            }
-            var result = _mapper.Map<ExerciseDto>(exercise);
-            return result;
+            throw new NotImplementedException();
         }
     }
 }

@@ -63,6 +63,8 @@ namespace PakerkowoAPI.Services
                     new Claim("DateOfBirth", user.DateOfBirth.Value.ToString("yyyy-MM-dd"))
                     );
             };
+
+
             //TODO
 
         }

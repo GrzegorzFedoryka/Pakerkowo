@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using PakerkowoAPI;
 using PakerkowoAPI.Entities;
 using PakerkowoAPI.Middlewares;
@@ -15,6 +16,7 @@ using PakerkowoAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace pakerkowoAPI
@@ -31,6 +33,26 @@ namespace pakerkowoAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var authenticationSettings = new AuthenticationSettings();
+            Configuration.GetSection("Authentication").Bind(authenticationSettings);
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = "Bearer";
+                    options.DefaultScheme = "Bearer";
+                    options.DefaultChallengeScheme = "Bearer";
+                })
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = authenticationSettings.JwtIssuer,
+                        ValidAudience = authenticationSettings.JwtIssuer,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey))
+                    };
+                });
 
             services.AddControllers();
             services.AddDbContext<PakerkowoDbContext>(options =>
@@ -53,6 +75,8 @@ namespace pakerkowoAPI
             seeder.Seed();
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
 

@@ -15,6 +15,7 @@ namespace PakerkowoAPI.Controllers
         {
             _accountService = accountService;
         }
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]LoginDto dto)
         {
             var token = await _accountService.GenerateJwt(dto);

@@ -36,6 +36,7 @@ namespace pakerkowoAPI
             var authenticationSettings = new AuthenticationSettings();
             Configuration.GetSection("Authentication").Bind(authenticationSettings);
 
+            services.AddSingleton(authenticationSettings);
             services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = "Bearer";
@@ -61,6 +62,7 @@ namespace pakerkowoAPI
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<IExerciseService, ExerciseService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddAutoMapper(this.GetType().Assembly);
         }
 

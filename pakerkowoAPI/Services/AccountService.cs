@@ -1,25 +1,36 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PakerkowoAPI.Entities;
 using PakerkowoAPI.Exceptions;
 using PakerkowoAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace PakerkowoAPI.Services
 {
-    public class AccountService
+    public interface IAccountService
+    {
+        Task<string> GenerateJwt(LoginDto dto);
+        Task RegisterUser(RegisterUserDto dto);
+    }
+
+    public class AccountService : IAccountService
     {
         private readonly PakerkowoDbContext _dbContext;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly AuthenticationSettings _settings;
 
-        public AccountService(PakerkowoDbContext dbContext, IPasswordHasher<User> passwordHasher)
+        public AccountService(PakerkowoDbContext dbContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings settings)
         {
             _dbContext = dbContext;
             _passwordHasher = passwordHasher;
+            _settings = settings;
         }
         public async Task RegisterUser(RegisterUserDto dto)
         {
@@ -36,12 +47,12 @@ namespace PakerkowoAPI.Services
         }
         public async Task<string> GenerateJwt(LoginDto dto)
         {
-            var user = _dbContext
+            var user = await _dbContext
                 .Users
                 .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.Email == dto.Email)
-                .Result;
-            if(user is null)
+                .FirstOrDefaultAsync(u => u.Email == dto.Email);
+
+            if (user is null)
             {
                 throw new BadRequestException("Invalid username or password!");
             }
@@ -64,9 +75,18 @@ namespace PakerkowoAPI.Services
                     );
             };
 
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.JwtKey));
+            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expires = DateTime.Now.AddMinutes(_settings.JwtExpireMinutes);
 
-            //TODO
+            var token = new JwtSecurityToken(_settings.JwtIssuer,
+                _settings.JwtIssuer,
+                claims,
+                expires: expires,
+                signingCredentials: cred);
 
+            var tokenHandler = new JwtSecurityTokenHandler();
+            return tokenHandler.WriteToken(token);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace PakerkowoAPI.Entities
         public DbSet<Role> Roles { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<BodyPart> BodyParts { get; set; }
+        public DbSet<TrainingSchedule> TrainingSchedules { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,6 +33,9 @@ namespace PakerkowoAPI.Entities
             modelBuilder.Entity<User>()
                 .Property(u => u.RoleId)
                 .IsRequired();
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.LikedExercises)
+                .WithMany(e => e.UsersLiked);
 
             modelBuilder.Entity<Role>()
                 .Property(r => r.Name)
@@ -40,10 +44,19 @@ namespace PakerkowoAPI.Entities
             modelBuilder.Entity<Exercise>()
                 .Property(e => e.Name)
                 .IsRequired();
+            modelBuilder.Entity<Exercise>()
+                .HasOne(e => e.CreatedBy);
+
 
             modelBuilder.Entity<BodyPart>()
                 .Property(bp => bp.Name)
                 .IsRequired();
+
+            modelBuilder.Entity<TrainingSchedule>()
+                .Property(t => t.Name)
+                .IsRequired();
+            
+            
         }
     }
 }

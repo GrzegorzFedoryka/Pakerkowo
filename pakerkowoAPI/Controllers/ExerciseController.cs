@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PakerkowoAPI.Controllers
 {
+    [Route("exercise")]
     [ApiController]
     public class ExerciseController : ControllerBase
     {
@@ -15,7 +16,7 @@ namespace PakerkowoAPI.Controllers
         {
             _exerciseService = service;
         }
-
+        [HttpGet]
         public IActionResult GetById([FromRoute] int id)
         {
             var exercise = _exerciseService.GetById(id);

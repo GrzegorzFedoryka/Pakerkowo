@@ -34,7 +34,7 @@ namespace PakerkowoAPI
                 }
             }
         }
-        private IEnumerable<Role> GetRoles()
+        private static IEnumerable<Role> GetRoles()
         {
             var roles = new List<Role>()
             {

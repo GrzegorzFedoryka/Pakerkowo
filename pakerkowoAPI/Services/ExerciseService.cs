@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PakerkowoAPI.Entities;
 using PakerkowoAPI.Exceptions;
@@ -12,7 +13,7 @@ namespace PakerkowoAPI.Services
 {
     public interface IExerciseService
     {
-        public Task<string> GetById(int id);
+        public Task<Exercise> GetById(int id);
     }
 
     public class ExerciseService : IExerciseService
@@ -21,16 +22,22 @@ namespace PakerkowoAPI.Services
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
 
-        public ExerciseService(PakerkowoDbContext dbContext, ILogger logger, IMapper mapper)
+        public ExerciseService(PakerkowoDbContext dbContext, ILogger<ExerciseService> logger, IMapper mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
             _mapper = mapper;
         }
 
-        public Task<string> GetById(int id)
+        public async Task Add(ExerciseDto dto)
         {
-            throw new NotImplementedException();
+
+        }
+
+        public async Task<Exercise> GetById(int id)
+        {
+            var exercise = await _dbContext.Exercises.FirstOrDefaultAsync(e => e.Id == id);
+            return exercise;
         }
     }
 }

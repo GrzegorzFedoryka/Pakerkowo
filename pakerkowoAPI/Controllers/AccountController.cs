@@ -16,6 +16,12 @@ namespace PakerkowoAPI.Controllers
         {
             _accountService = accountService;
         }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromForm]RegisterUserDto dto)
+        {
+            var id = await _accountService.RegisterUser(dto);
+            return Created(id.ToString(), null);
+        }
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]LoginDto dto)
         {

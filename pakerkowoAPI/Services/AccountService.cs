@@ -17,7 +17,7 @@ namespace PakerkowoAPI.Services
     public interface IAccountService
     {
         Task<string> GenerateJwt(LoginDto dto);
-        Task RegisterUser(RegisterUserDto dto);
+        Task<int> RegisterUser(RegisterUserDto dto);
     }
 
     public class AccountService : IAccountService
@@ -32,7 +32,7 @@ namespace PakerkowoAPI.Services
             _passwordHasher = passwordHasher;
             _settings = settings;
         }
-        public async Task RegisterUser(RegisterUserDto dto)
+        public async Task<int> RegisterUser(RegisterUserDto dto)
         {
             var newUser = new User()
             {
@@ -42,8 +42,10 @@ namespace PakerkowoAPI.Services
             };
             var passwordHash = _passwordHasher.HashPassword(newUser, dto.Password);
             newUser.PasswordHash = passwordHash;
-            _dbContext.Users.Add(newUser);
+            await _dbContext.Users.AddAsync(newUser);
             _dbContext.SaveChanges();
+
+            return newUser.Id;
         }
         public async Task<string> GenerateJwt(LoginDto dto)
         {

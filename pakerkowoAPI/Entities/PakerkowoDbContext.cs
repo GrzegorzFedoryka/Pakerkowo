@@ -17,6 +17,7 @@ namespace PakerkowoAPI.Entities
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<BodyPart> BodyParts { get; set; }
         public DbSet<TrainingSchedule> TrainingSchedules { get; set; }
+        public DbSet<Progress> Progresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,8 +56,13 @@ namespace PakerkowoAPI.Entities
             modelBuilder.Entity<TrainingSchedule>()
                 .Property(t => t.Name)
                 .IsRequired();
-            
-            
+
+            modelBuilder.Entity<Progress>()
+                .Property(p => p.ExerciseId)
+                .IsRequired();
+            modelBuilder.Entity<Progress>()
+                .Property(p => p.TimeStamp)
+                .IsRequired();
         }
     }
 }

@@ -15,5 +15,6 @@ namespace PakerkowoAPI.Entities
         public int RoleId { get; set; }
         public virtual Role Role { get; set; }
         public virtual List<Exercise> LikedExercises { get; set; }
+        public virtual List<TrainingSchedule> Schedules { get; set; }
     }
 }
